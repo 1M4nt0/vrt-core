@@ -7,14 +7,14 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "genContractType": "abi-types-generator './public/contracts/VehicleMarketplace.json' --output='./types' --name=VehicleMarketplaceContract --provider=ethers_v5 && abi-types-generator './public/contracts/VehicleRegistrationToken.json' --output='./types' --name=VehicleRegistrationTokenContract --provider=ethers_v5 ",
-        "build-contract-abi": "docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-2022-website:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleMarketplace.sol --overwrite && docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-2022-website:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleRegistrationToken.sol --overwrite",
-        "create": "graph create example --node https://api.thegraph.com/deploy/",
-        "create-local": "graph create example --node http://127.0.0.1:8020",
+        "genContractType": "abi-types-generator './artifacts/VehicleMarketplace.json' --output='./types' --name=VehicleMarketplaceContract --provider=ethers_v5 && abi-types-generator './artifacts/VehicleRegistrationToken.json' --output='./types' --name=VehicleRegistrationTokenContract --provider=ethers_v5 ",
+        "build-contract-abi": "docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-auto-uniud-backend:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleMarketplace.sol --overwrite && docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-auto-uniud-backend:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleRegistrationToken.sol --overwrite",
+        "create": "graph create vrtproject --node https://api.thegraph.com/deploy/",
+        "create-local": "graph create vrtproject --node http://127.0.0.1:8020",
         "codegen": "graph codegen",
         "build-graph": "graph build",
-        "deploy": "graph deploy example --ipfs https://api.thegraph.com/ipfs/ --node --node http://127.0.0.1:8020",
-        "deploy-local": "graph deploy example --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
+        "deploy": "graph deploy vrtproject --ipfs https://api.thegraph.com/ipfs/ --node http://127.0.0.1:8020",
+        "deploy-local": "graph deploy vrtproject --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
     },
     "dependencies": {
         "@graphprotocol/graph-ts": "^0.27.0",

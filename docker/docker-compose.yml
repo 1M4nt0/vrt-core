@@ -1,27 +1,51 @@
 version: '3.8'
 
 services:
-  ganahce-cli:
-    image: trufflesuite/ganache-cli:latest
+  app:
+    image: vrt-project-app
+    depends_on:
+      - postgres
+      - blockscout
+      - ganache
+      - graph-node
+      - ipfs
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        DOMAIN: localhost
+        NETWORK_ID: 5777
+        CHAIN_ID: 1337
+        TESTNET_RPC: http://localhost:8545
+        TESTNET_EXPLORER: http://localhost:4000
+        IPFS_GATEWAY: https://localhost:8080
+        GRAPH_QUERY_BASE_URL: http://localhost:8000
+        SUBGRAPH_NAME: vrtproject
+        SECRET_COOKIE_PASSWORD: z5c4kUE635h1Sgczml6aG7IdZisBf821     
+    ports:
+      - 3000:3000
+
+  ganache:
+    image: trufflesuite/ganache:v7.4.3
     ports:
       - "8545:8545"
     volumes:
       - ./data/ganache:/ganache_data
     entrypoint:
       - node
-      - /app/ganache-core.docker.cli.js
-      - --deterministic
-      - --db=/ganache_data
-      - --mnemonic
+      - /app/dist/node/cli.js
+      - --database.dbPath
+      - /ganache_data
+      - --wallet.mnemonic
       - "minimum symptom minute gloom tragic situate silver mechanic salad amused elite beef"
-      - --networkId
+      - --chain.networkId
       - "5777"
-      - --hostname
+      - --server.host
       - "0.0.0.0"
-      - --debug
+      - --logging.debug
 
   graph-node:
-    image: graphprotocol/graph-node
+    image: graphprotocol/graph-node:v0.27.0
     ports:
       - "8000:8000"
       - "8001:8001"
@@ -41,10 +65,10 @@ services:
       ipfs: "ipfs:5001"
       ethereum: "ganache:http://host.docker.internal:8545"
       GRAPH_LOG: info
-      GRAPH_ALLOW_NON_DETERMINISTIC_IPFS: true
+      GRAPH_ALLOW_NON_DETERMINISTIC_IPFS: true                  #Allow extra feature of auto fetching data from IPFS
 
   ipfs:
-      image: ipfs/go-ipfs:v0.10.0
+      image: ipfs/go-ipfs:v0.15.0
       ports:
         - "4001:4001"
         - "5001:5001"
@@ -70,21 +94,7 @@ services:
   blockscout:
     depends_on:
       - postgres
-    image: blockscout/blockscout:${DOCKER_TAG:-latest}
-    build:
-      context: ..
-      dockerfile: ./docker/bin/Dockerfile
-      args:
-        COIN: ""
-        CACHE_EXCHANGE_RATES_PERIOD: ""
-        DISABLE_READ_API: "false"
-        API_PATH: "/"
-        NETWORK_PATH: "/"
-        DISABLE_WEBAPP: "false"
-        DISABLE_WRITE_API: "false"
-        CACHE_ENABLE_TOTAL_GAS_USAGE_COUNTER: ""
-        WOBSERVER_ENABLED: "false"
-        ADMIN_PANEL_ENABLED: ""
+    image: blockscout/blockscout:4.1.8
     restart: always
     container_name: 'blockscout'
     links:
