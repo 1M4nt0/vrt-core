@@ -15,8 +15,8 @@ IPFS: http://localhost:5001/
 
 ### Gen Dev Files
 
-1. npm run build-contract-abi
-2. npm run genContractType
+1. npm run build-contract-abi (solo se modificati i contratti)
+2. npm run genContractType (solo se modificati i contratti)
 
 ### Migrate contracts to ganache
 
@@ -24,7 +24,7 @@ IPFS: http://localhost:5001/
 
 ### Create new subgraph
 
-1. npm run codegen
+1. npm run codegen (solo se modificato schema.graphql)
 2. npm run create-local
 3. npm run deploy-local
 
