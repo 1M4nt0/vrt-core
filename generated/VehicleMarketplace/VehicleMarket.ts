@@ -31,7 +31,7 @@ export class Cancel__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -61,7 +61,7 @@ export class OnSale__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
@@ -95,7 +95,7 @@ export class Sold__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
@@ -104,7 +104,7 @@ export class Sold__Params {
   }
 }
 
-export class VehicleMarket__getTokenSaleTicketResultValue0Struct extends ethereum.Tuple {
+export class VehicleMarket__getVehicleSaleTicketResultValue0Struct extends ethereum.Tuple {
   get seller(): Address {
     return this[0].toAddress();
   }
@@ -113,7 +113,7 @@ export class VehicleMarket__getTokenSaleTicketResultValue0Struct extends ethereu
     return this[1].toAddress();
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this[2].toBigInt();
   }
 
@@ -131,52 +131,56 @@ export class VehicleMarket extends ethereum.SmartContract {
     return new VehicleMarket("VehicleMarket", address);
   }
 
-  getTokenSaleTicket(
-    tokenId: BigInt
-  ): VehicleMarket__getTokenSaleTicketResultValue0Struct {
+  getVehicleSaleTicket(
+    vehicleId: BigInt
+  ): VehicleMarket__getVehicleSaleTicketResultValue0Struct {
     let result = super.call(
-      "getTokenSaleTicket",
-      "getTokenSaleTicket(uint256):((address,address,uint256,uint256,uint8))",
-      [ethereum.Value.fromUnsignedBigInt(tokenId)]
+      "getVehicleSaleTicket",
+      "getVehicleSaleTicket(uint256):((address,address,uint256,uint256,uint8))",
+      [ethereum.Value.fromUnsignedBigInt(vehicleId)]
     );
 
-    return changetype<VehicleMarket__getTokenSaleTicketResultValue0Struct>(
+    return changetype<VehicleMarket__getVehicleSaleTicketResultValue0Struct>(
       result[0].toTuple()
     );
   }
 
-  try_getTokenSaleTicket(
-    tokenId: BigInt
-  ): ethereum.CallResult<VehicleMarket__getTokenSaleTicketResultValue0Struct> {
+  try_getVehicleSaleTicket(
+    vehicleId: BigInt
+  ): ethereum.CallResult<
+    VehicleMarket__getVehicleSaleTicketResultValue0Struct
+  > {
     let result = super.tryCall(
-      "getTokenSaleTicket",
-      "getTokenSaleTicket(uint256):((address,address,uint256,uint256,uint8))",
-      [ethereum.Value.fromUnsignedBigInt(tokenId)]
+      "getVehicleSaleTicket",
+      "getVehicleSaleTicket(uint256):((address,address,uint256,uint256,uint8))",
+      [ethereum.Value.fromUnsignedBigInt(vehicleId)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<VehicleMarket__getTokenSaleTicketResultValue0Struct>(
+      changetype<VehicleMarket__getVehicleSaleTicketResultValue0Struct>(
         value[0].toTuple()
       )
     );
   }
 
-  isTokenOnSale(tokenId: BigInt): boolean {
-    let result = super.call("isTokenOnSale", "isTokenOnSale(uint256):(bool)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
-    ]);
+  isVehicleOnSale(vehicleId: BigInt): boolean {
+    let result = super.call(
+      "isVehicleOnSale",
+      "isVehicleOnSale(uint256):(bool)",
+      [ethereum.Value.fromUnsignedBigInt(vehicleId)]
+    );
 
     return result[0].toBoolean();
   }
 
-  try_isTokenOnSale(tokenId: BigInt): ethereum.CallResult<boolean> {
+  try_isVehicleOnSale(vehicleId: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "isTokenOnSale",
-      "isTokenOnSale(uint256):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(tokenId)]
+      "isVehicleOnSale",
+      "isVehicleOnSale(uint256):(bool)",
+      [ethereum.Value.fromUnsignedBigInt(vehicleId)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -239,32 +243,32 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class BuyNftCall extends ethereum.Call {
-  get inputs(): BuyNftCall__Inputs {
-    return new BuyNftCall__Inputs(this);
+export class BuyVehicleCall extends ethereum.Call {
+  get inputs(): BuyVehicleCall__Inputs {
+    return new BuyVehicleCall__Inputs(this);
   }
 
-  get outputs(): BuyNftCall__Outputs {
-    return new BuyNftCall__Outputs(this);
+  get outputs(): BuyVehicleCall__Outputs {
+    return new BuyVehicleCall__Outputs(this);
   }
 }
 
-export class BuyNftCall__Inputs {
-  _call: BuyNftCall;
+export class BuyVehicleCall__Inputs {
+  _call: BuyVehicleCall;
 
-  constructor(call: BuyNftCall) {
+  constructor(call: BuyVehicleCall) {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
 
-export class BuyNftCall__Outputs {
-  _call: BuyNftCall;
+export class BuyVehicleCall__Outputs {
+  _call: BuyVehicleCall;
 
-  constructor(call: BuyNftCall) {
+  constructor(call: BuyVehicleCall) {
     this._call = call;
   }
 }
@@ -286,7 +290,7 @@ export class CancelSaleCall__Inputs {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -299,24 +303,24 @@ export class CancelSaleCall__Outputs {
   }
 }
 
-export class PlaceNftOnSaleCall extends ethereum.Call {
-  get inputs(): PlaceNftOnSaleCall__Inputs {
-    return new PlaceNftOnSaleCall__Inputs(this);
+export class PutVehicleOnSaleCall extends ethereum.Call {
+  get inputs(): PutVehicleOnSaleCall__Inputs {
+    return new PutVehicleOnSaleCall__Inputs(this);
   }
 
-  get outputs(): PlaceNftOnSaleCall__Outputs {
-    return new PlaceNftOnSaleCall__Outputs(this);
+  get outputs(): PutVehicleOnSaleCall__Outputs {
+    return new PutVehicleOnSaleCall__Outputs(this);
   }
 }
 
-export class PlaceNftOnSaleCall__Inputs {
-  _call: PlaceNftOnSaleCall;
+export class PutVehicleOnSaleCall__Inputs {
+  _call: PutVehicleOnSaleCall;
 
-  constructor(call: PlaceNftOnSaleCall) {
+  constructor(call: PutVehicleOnSaleCall) {
     this._call = call;
   }
 
-  get tokenId(): BigInt {
+  get vehicleId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 
@@ -325,10 +329,10 @@ export class PlaceNftOnSaleCall__Inputs {
   }
 }
 
-export class PlaceNftOnSaleCall__Outputs {
-  _call: PlaceNftOnSaleCall;
+export class PutVehicleOnSaleCall__Outputs {
+  _call: PutVehicleOnSaleCall;
 
-  constructor(call: PlaceNftOnSaleCall) {
+  constructor(call: PutVehicleOnSaleCall) {
     this._call = call;
   }
 }

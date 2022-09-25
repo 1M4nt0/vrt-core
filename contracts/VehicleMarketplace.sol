@@ -12,9 +12,9 @@ contract VehicleMarketplace {
 
     VehicleRegistrationToken vrt;
 
-    mapping(uint256 => bool) _isTokenOnSale;
+    mapping(uint256 => bool) _isVehicleOnSale;
     mapping(uint256 => SaleTicket) _idToSaleTicket;
-    mapping(uint256 => uint256) _tokenIdToSaleTicketId;
+    mapping(uint256 => uint256) _vehicleIdToSaleTicketId;
 
     constructor(address VRTAddress) {
         vrt = VehicleRegistrationToken(VRTAddress);
@@ -29,7 +29,7 @@ contract VehicleMarketplace {
     struct SaleTicket {
         address seller;
         IERC721 tokenContract;
-        uint256 tokenId;
+        uint256 vehicleId;
         uint256 price;
         SaleTicketStatus status;
     }
@@ -38,7 +38,7 @@ contract VehicleMarketplace {
         uint256 indexed ticketId,
         address seller,
         address tokenContract,
-        uint256 tokenId,
+        uint256 vehicleId,
         uint256 price
     );
 
@@ -46,84 +46,84 @@ contract VehicleMarketplace {
         uint256 indexed ticketId,
         address buyer,
         address tokenContract,
-        uint256 tokenId,
+        uint256 vehicleId,
         uint256 price
     );
 
-    event Cancel(uint256 indexed ticketId, address seller, uint256 tokenId);
+    event Cancel(uint256 indexed ticketId, address seller, uint256 vehicleId);
 
     function listedItemsCount() public view returns (uint256) {
         return _listedItemsCount.current();
     }
 
-    function isTokenOnSale(uint256 tokenId) public view returns (bool) {
-        return _isTokenOnSale[tokenId];
+    function isVehicleOnSale(uint256 vehicleId) public view returns (bool) {
+        return _isVehicleOnSale[vehicleId];
     }
 
-    function placeNftOnSale(uint256 tokenId, uint256 price) public payable {
+    function putVehicleOnSale(uint256 vehicleId, uint256 price) public payable {
         require(
-            vrt.ownerOf(tokenId) == msg.sender,
-            "You are not owner of this nft"
+            vrt.ownerOf(vehicleId) == msg.sender,
+            "You are not owner of this vehicle"
         );
-        require(!_isTokenOnSale[tokenId], "Item is already on sale");
+        require(!_isVehicleOnSale[vehicleId], "Vehicle is already on sale");
         _saleTicketIds.increment();
         uint256 _ticketId = _saleTicketIds.current();
         _listedItemsCount.increment();
-        _isTokenOnSale[tokenId] = true;
-        _tokenIdToSaleTicketId[tokenId] = _ticketId;
+        _isVehicleOnSale[vehicleId] = true;
+        _vehicleIdToSaleTicketId[vehicleId] = _ticketId;
         _idToSaleTicket[_ticketId] = SaleTicket(
             msg.sender,
             vrt,
-            tokenId,
+            vehicleId,
             price,
             SaleTicketStatus.PENDING
         );
 
-        emit OnSale(_ticketId, msg.sender, address(vrt), tokenId, price);
+        emit OnSale(_ticketId, msg.sender, address(vrt), vehicleId, price);
     }
 
-    function getTokenSaleTicket(uint256 tokenId)
+    function getVehicleSaleTicket(uint256 vehicleId)
         public
         view
         returns (SaleTicket memory)
     {
-        require(_isTokenOnSale[tokenId], "The token is not on sale");
-        uint256 _ticketId = _tokenIdToSaleTicketId[tokenId];
+        require(_isVehicleOnSale[vehicleId], "This vehicle is not on sale");
+        uint256 _ticketId = _vehicleIdToSaleTicketId[vehicleId];
         return _idToSaleTicket[_ticketId];
     }
 
-    function buyNft(uint256 tokenId) public payable {
-        require(_isTokenOnSale[tokenId], "The vehicle is not on sale");
-        uint256 _ticketId = _tokenIdToSaleTicketId[tokenId];
+    function buyVehicle(uint256 vehicleId) public payable {
+        require(_isVehicleOnSale[vehicleId], "This vehicle is not on sale");
+        uint256 _ticketId = _vehicleIdToSaleTicketId[vehicleId];
         SaleTicket storage saleTicket = _idToSaleTicket[_ticketId];
         uint256 price = saleTicket.price;
-        address owner = vrt.ownerOf(tokenId);
+        address owner = vrt.ownerOf(vehicleId);
 
-        require(msg.sender != owner, "You already own this NFT");
+        require(msg.sender != owner, "You already own this vehicle");
         require(msg.value == price, "Please submit the asking price");
 
-        vrt.transferFrom(owner, msg.sender, tokenId);
-        _isTokenOnSale[tokenId] = false;
+        vrt.transferFrom(owner, msg.sender, vehicleId);
+        _isVehicleOnSale[vehicleId] = false;
         _listedItemsCount.decrement();
         saleTicket.status = SaleTicketStatus.COMPLETED;
-        delete _tokenIdToSaleTicketId[tokenId];
+        delete _vehicleIdToSaleTicketId[vehicleId];
 
         payable(owner).transfer(msg.value);
 
-        emit Sold(_ticketId, msg.sender, address(vrt), tokenId, price);
+        emit Sold(_ticketId, msg.sender, address(vrt), vehicleId, price);
     }
 
-    function cancelSale(uint256 tokenId) public {
+    function cancelSale(uint256 vehicleId) public {
         require(
-            vrt.ownerOf(tokenId) == msg.sender,
-            "You are not owner of this nft"
+            vrt.ownerOf(vehicleId) == msg.sender,
+            "You are not owner of this vehicle"
         );
-        require(_isTokenOnSale[tokenId], "Item is not on sale");
-        uint256 _ticketId = _tokenIdToSaleTicketId[tokenId];
+        require(_isVehicleOnSale[vehicleId], "Vehicle is not on sale");
+        uint256 _ticketId = _vehicleIdToSaleTicketId[vehicleId];
         SaleTicket storage saleTicket = _idToSaleTicket[_ticketId];
-        _isTokenOnSale[tokenId] = false;
+        _isVehicleOnSale[vehicleId] = false;
         saleTicket.status = SaleTicketStatus.CANCELLED;
-        delete _tokenIdToSaleTicketId[tokenId];
-        emit Cancel(_ticketId, msg.sender, tokenId);
+        delete _vehicleIdToSaleTicketId[vehicleId];
+        emit Cancel(_ticketId, msg.sender, vehicleId);
     }
 }

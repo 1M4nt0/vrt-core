@@ -6,6 +6,8 @@ generated
 migrations
 typescript
 node_modules
+types
+
 mapping.ts
 schema.graphql
 subgraph.yaml

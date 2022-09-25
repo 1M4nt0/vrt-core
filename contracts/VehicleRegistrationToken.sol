@@ -93,7 +93,6 @@ contract VehicleRegistrationToken is ERC721URIStorage, Ownable {
         override
         returns (bool)
     {
-        // Whitelist OpenSea proxy contract for easy trading.
         if (operator == _marketplaceAddress) {
             return true;
         }
