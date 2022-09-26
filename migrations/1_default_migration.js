@@ -5,9 +5,8 @@ const { writeFileSync } = require("fs");
 module.exports = async function(deployer) {
     await deployer.deploy(VehicleRegistrationToken);
     await deployer.deploy(VehicleMarketplace, VehicleRegistrationToken.address);
-    VehicleRegistrationToken.deployed().then((instance) => {
-        instance.setMarketplaceAddress(VehicleMarketplace.address);
-    });
+    const VRT = await VehicleRegistrationToken.deployed();
+    await VRT.setMarketplaceAddress(VehicleMarketplace.address);
 
     writeFileSync(
         "deploy.json",
