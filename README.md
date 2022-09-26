@@ -1,29 +1,41 @@
 # Vehicle Registration Token (VRT) - Core
 
-## Endpoints HTTP
+Core infrastructure for Vehicle Registration Token Project, a protocol for trace vehicle's property and their history in Ethereum blockchain.
 
-Graph: http://127.0.0.1:8000/subgraphs/name/vrtproject/graphql
+## Prerequisites:
 
-IPFS: http://localhost:5001/
+-   Docker
+-   Truffle
+-   graph-cli
 
-## Launch application
+## Local deployment
 
-### Start Dev Server
+### Clone repository
 
-1. Run docker (docker compose up)
-2. npm run dev
+1. `clone this repository`
+2. `cd vrt-project-core`
+3. `npm install`
 
-### Gen Dev Files
+### Start docker containers
 
-1. truffle compile
-2. npm run build-contract-abi (solo se modificati i contratti)
+2. `cd vrt-project-core/docker`
+3. `docker compose up`
 
-### Migrate contracts to ganache
+### Generate contracts abis
 
-1. truffle migrate
+1. `truffle compile`
+2. `npm run build-contract-abi`
 
-### Create new subgraph
+### Migrate contracts to Ganache
 
-1. npm run codegen (solo se modificato schema.graphql)
-2. npm run create-local
-3. npm run deploy-local
+1. `truffle migrate`
+
+### Deploy The Graph subgraph
+
+1. `npm run codegen`
+2. `npm run create-local-graph`
+3. `npm run deploy-local-graph`
+
+## Interface
+
+Check [Vehicle Registration Token (VRT) - Interface](https://github.com/1M4nt0/tesi-uniud-2022-interface)
