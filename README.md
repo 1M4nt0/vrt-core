@@ -18,8 +18,8 @@ Core infrastructure for Vehicle Registration Token Project, a protocol for trace
 
 ### Start docker containers
 
-2. `cd vrt-project-core/docker`
-3. `docker compose up`
+1. `cd vrt-project-core/docker`
+2. `docker compose up`
 
 ### Generate contracts abis
 
