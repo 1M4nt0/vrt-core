@@ -3,7 +3,7 @@
     "version": "0.0.3",
     "private": false,
     "scripts": {
-        "build-contract-abi": "docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-auto-uniud-backend:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleMarketplace.sol --overwrite && docker run --rm -v D:/UTENTE/Andrea/CODICE/Ethereum/tesi-auto-uniud-backend:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleRegistrationToken.sol --overwrite",
+        "build-contract-abi": "docker run --rm -v %cd%/:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleMarketplace.sol --overwrite && docker run --rm -v %cd%/:/src ethereum/solc:stable --abi --include-path /src/node_modules/ -o /src/abis --base-path . /src/contracts/VehicleRegistrationToken.sol --overwrite",
         "create-graph": "graph create vrtproject --node https://api.thegraph.com/deploy/",
         "create-local-graph": "graph create vrtproject --node http://127.0.0.1:8020",
         "codegen": "graph codegen",
