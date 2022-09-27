@@ -1,13 +1,13 @@
 abis
 build
 docker
+docs
 examples
 generated
 migrations
-typescript
 node_modules
-types
 
+deploy.json
 mapping.ts
 schema.graphql
 subgraph.yaml
