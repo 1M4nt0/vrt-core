@@ -63,13 +63,13 @@ export function handleOnSale(event: OnSale): void {
     let ticketID = event.params.ticketId.toString();
     let saleTicket = new SaleTicket(ticketID);
     saleTicket.price = event.params.price;
-    saleTicket.token = event.params.tokenId.toString();
+    saleTicket.token = event.params.vehicleId.toString();
     saleTicket.status = "PENDING";
     saleTicket.seller = event.params.seller;
     saleTicket.timestamp = event.block.timestamp;
     saleTicket.save();
 
-    let token = Token.load(event.params.tokenId.toString());
+    let token = Token.load(event.params.vehicleId.toString());
     token!.isOnSale = true;
     token!.save();
 }
@@ -80,7 +80,7 @@ export function handleOnSold(event: Sold): void {
     saleTicket!.status = "COMPLETED";
     saleTicket!.save();
 
-    let token = Token.load(event.params.tokenId.toString());
+    let token = Token.load(event.params.vehicleId.toString());
     token!.isOnSale = false;
     token!.save();
 }
@@ -91,7 +91,7 @@ export function handleOnCancel(event: Cancel): void {
     saleTicket!.status = "CANCELLED";
     saleTicket!.save();
 
-    let token = Token.load(event.params.tokenId.toString());
+    let token = Token.load(event.params.vehicleId.toString());
     token!.isOnSale = false;
     token!.save();
 }
