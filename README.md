@@ -22,9 +22,9 @@ Core infrastructure for Vehicle Registration Token Project, a protocol for trace
 ### Clone repository and install dependencies
 
 ```
-git clone https://github.com/1M4nt0/tesi-uniud-2022-core
+git clone https://github.com/1M4nt0/vrt-core
 
-cd tesi-uniud-2022-core
+cd vrt-core
 
 npm install
 ```
@@ -32,7 +32,7 @@ npm install
 ### Start docker containers
 
 ```
-cd tesi-uniud-2022-core/docker
+cd vrt-core/docker
 
 docker compose up
 ```
@@ -63,4 +63,4 @@ npm run deploy-local-graph
 
 ## Interface
 
-Check [Vehicle Registration Token (VRT) - Interface](https://github.com/1M4nt0/tesi-uniud-2022-interface)
+Check [Vehicle Registration Token (VRT) - Interface](https://github.com/1M4nt0/vrt-interface)
