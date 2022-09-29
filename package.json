@@ -1,6 +1,6 @@
 {
     "name": "vrt-core",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Core Smart Contracts for Vehicle Registration Token Project, a protocol for trace vehicle's property and their history in Ethereum blockchain.",
     "author": {
         "name": "Andrea Antonutti",
@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/1M4nt0/tesi-uniud-2022-core"
+        "url": "https://github.com/1M4nt0/vrt-core"
     },
     "keywords": [
         "blockchain",
