@@ -34,8 +34,12 @@ npm install
 ```
 cd vrt-core/docker
 
-docker compose up
+docker compose up -d postgres ganache ipfs
+
+docker compose up -d graph-node blockscout
 ```
+
+Between `docker compose up` commands wait 1-2 minutes for components to start
 
 ### Generate contracts abis
 
