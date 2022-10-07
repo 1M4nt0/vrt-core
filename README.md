@@ -32,7 +32,7 @@ npm install
 ### Start docker containers
 
 ```
-cd vrt-core/docker
+cd docker
 
 docker compose up -d postgres ganache ipfs
 
