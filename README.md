@@ -1,6 +1,6 @@
 # Vehicle Registration Token (VRT) - Core
 
-Core infrastructure for Vehicle Registration Token Project, a protocol for trace vehicle's property and their history in Ethereum blockchain.
+Core infrastructure for Vehicle Registration Token project, a protocol to trace vehicles ownership and history on Ethereum blockchain.
 
 ## Prerequisites:
 
