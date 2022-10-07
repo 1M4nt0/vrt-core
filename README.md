@@ -32,7 +32,7 @@ npm install
 ### Start docker containers
 
 ```
-cd vrt-core/docker
+cd docker
 
 docker compose up -d postgres ganache ipfs
 
@@ -44,6 +44,8 @@ Between `docker compose up` commands wait 1-2 minutes for components to start
 ### Generate contracts abis
 
 ```
+cd ..
+
 truffle compile
 
 npm run build-contract-abi
